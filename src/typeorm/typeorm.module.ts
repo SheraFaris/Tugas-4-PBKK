@@ -10,8 +10,9 @@ import { UsersModule } from './users/users.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: 'ecommerce.sqlite',
+      type: 'sqljs',
+      // Use in-memory SQL.js to avoid native build issues
+      autoSave: false,
       entities: [User, Post, Like],
       synchronize: true,
       // logging: true,

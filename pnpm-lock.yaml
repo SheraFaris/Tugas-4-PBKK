@@ -22,7 +22,7 @@ importers:
         version: 11.1.6(@nestjs/common@11.1.6(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.6)
       '@nestjs/typeorm':
         specifier: ^11.0.0
-        version: 11.0.0(@nestjs/common@11.1.6(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.6)(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@0.3.26(reflect-metadata@0.2.2)(sqlite3@5.1.7)(ts-node@10.9.2(@types/node@22.18.5)(typescript@5.9.2)))
+        version: 11.0.0(@nestjs/common@11.1.6(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.6)(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@0.3.26(reflect-metadata@0.2.2)(sql.js@1.13.0)(sqlite3@5.1.7)(ts-node@10.9.2(@types/node@22.18.5)(typescript@5.9.2)))
       '@prisma/client':
         specifier: ^6.16.2
         version: 6.16.2(prisma@6.16.2(typescript@5.9.2))(typescript@5.9.2)
@@ -41,12 +41,12 @@ importers:
       rxjs:
         specifier: ^7.8.1
         version: 7.8.2
-      sqlite3:
-        specifier: ^5.1.7
-        version: 5.1.7
+      sql.js:
+        specifier: ^1.9.0
+        version: 1.13.0
       typeorm:
         specifier: ^0.3.26
-        version: 0.3.26(reflect-metadata@0.2.2)(sqlite3@5.1.7)(ts-node@10.9.2(@types/node@22.18.5)(typescript@5.9.2))
+        version: 0.3.26(reflect-metadata@0.2.2)(sql.js@1.13.0)(sqlite3@5.1.7)(ts-node@10.9.2(@types/node@22.18.5)(typescript@5.9.2))
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3.2.0
@@ -3155,6 +3155,9 @@ packages:
     resolution: {integrity: sha512-ed7OK4e9ywpE7pgRMkMQmZDPKSVdm0oX5IEtZiKnFucSF0zu6c80GZBe38UqHuVhTWJ9xsKgSMjCG2bml86KvA==}
     engines: {node: '>=14'}
 
+  sql.js@1.13.0:
+    resolution: {integrity: sha512-RJbVP1HRDlUUXahJ7VMTcu9Rm1Nzw+EBpoPr94vnbD4LwR715F3CcxE2G2k45PewcaZ57pjetYa+LoSJLAASgA==}
+
   sqlite3@5.1.7:
     resolution: {integrity: sha512-GGIyOiFaG+TUra3JIfkI/zGP8yZYLPQ0pl1bH+ODjiX57sPhrLU5sQJn1y9bDKZUFYkX1crlrPfSYt0BKKdkog==}
 
@@ -4446,13 +4449,13 @@ snapshots:
     optionalDependencies:
       '@nestjs/platform-express': 11.1.6(@nestjs/common@11.1.6(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.6)
 
-  '@nestjs/typeorm@11.0.0(@nestjs/common@11.1.6(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.6)(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@0.3.26(reflect-metadata@0.2.2)(sqlite3@5.1.7)(ts-node@10.9.2(@types/node@22.18.5)(typescript@5.9.2)))':
+  '@nestjs/typeorm@11.0.0(@nestjs/common@11.1.6(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.6)(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@0.3.26(reflect-metadata@0.2.2)(sql.js@1.13.0)(sqlite3@5.1.7)(ts-node@10.9.2(@types/node@22.18.5)(typescript@5.9.2)))':
     dependencies:
       '@nestjs/common': 11.1.6(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2)
       '@nestjs/core': 11.1.6(@nestjs/common@11.1.6(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.1.6)(reflect-metadata@0.2.2)(rxjs@7.8.2)
       reflect-metadata: 0.2.2
       rxjs: 7.8.2
-      typeorm: 0.3.26(reflect-metadata@0.2.2)(sqlite3@5.1.7)(ts-node@10.9.2(@types/node@22.18.5)(typescript@5.9.2))
+      typeorm: 0.3.26(reflect-metadata@0.2.2)(sql.js@1.13.0)(sqlite3@5.1.7)(ts-node@10.9.2(@types/node@22.18.5)(typescript@5.9.2))
 
   '@noble/hashes@1.8.0': {}
 
@@ -5115,6 +5118,7 @@ snapshots:
   bindings@1.5.0:
     dependencies:
       file-uri-to-path: 1.0.0
+    optional: true
 
   bl@4.1.0:
     dependencies:
@@ -5260,9 +5264,11 @@ snapshots:
     dependencies:
       readdirp: 4.1.2
 
-  chownr@1.1.4: {}
+  chownr@1.1.4:
+    optional: true
 
-  chownr@2.0.0: {}
+  chownr@2.0.0:
+    optional: true
 
   chrome-trace-event@1.0.4: {}
 
@@ -5401,10 +5407,12 @@ snapshots:
   decompress-response@6.0.0:
     dependencies:
       mimic-response: 3.1.0
+    optional: true
 
   dedent@1.7.0: {}
 
-  deep-extend@0.6.0: {}
+  deep-extend@0.6.0:
+    optional: true
 
   deep-is@0.1.4: {}
 
@@ -5433,7 +5441,8 @@ snapshots:
 
   destr@2.0.5: {}
 
-  detect-libc@2.1.0: {}
+  detect-libc@2.1.0:
+    optional: true
 
   detect-newline@3.1.0: {}
 
@@ -5481,6 +5490,7 @@ snapshots:
   end-of-stream@1.4.5:
     dependencies:
       once: 1.4.0
+    optional: true
 
   enhanced-resolve@5.18.3:
     dependencies:
@@ -5632,7 +5642,8 @@ snapshots:
 
   exit-x@0.2.2: {}
 
-  expand-template@2.0.3: {}
+  expand-template@2.0.3:
+    optional: true
 
   expect@30.1.2:
     dependencies:
@@ -5724,7 +5735,8 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  file-uri-to-path@1.0.0: {}
+  file-uri-to-path@1.0.0:
+    optional: true
 
   fill-range@7.1.1:
     dependencies:
@@ -5802,7 +5814,8 @@ snapshots:
 
   fresh@2.0.0: {}
 
-  fs-constants@1.0.0: {}
+  fs-constants@1.0.0:
+    optional: true
 
   fs-extra@10.1.0:
     dependencies:
@@ -5813,6 +5826,7 @@ snapshots:
   fs-minipass@2.1.0:
     dependencies:
       minipass: 3.3.6
+    optional: true
 
   fs-monkey@1.1.0: {}
 
@@ -5870,7 +5884,8 @@ snapshots:
       nypm: 0.6.2
       pathe: 2.0.3
 
-  github-from-package@0.0.0: {}
+  github-from-package@0.0.0:
+    optional: true
 
   glob-parent@5.1.2:
     dependencies:
@@ -6025,7 +6040,8 @@ snapshots:
 
   inherits@2.0.4: {}
 
-  ini@1.3.8: {}
+  ini@1.3.8:
+    optional: true
 
   ip-address@10.0.1:
     optional: true
@@ -6590,7 +6606,8 @@ snapshots:
 
   mimic-fn@2.1.0: {}
 
-  mimic-response@3.1.0: {}
+  mimic-response@3.1.0:
+    optional: true
 
   minimatch@10.0.3:
     dependencies:
@@ -6638,8 +6655,10 @@ snapshots:
   minipass@3.3.6:
     dependencies:
       yallist: 4.0.0
+    optional: true
 
-  minipass@5.0.0: {}
+  minipass@5.0.0:
+    optional: true
 
   minipass@7.1.2: {}
 
@@ -6647,14 +6666,17 @@ snapshots:
     dependencies:
       minipass: 3.3.6
       yallist: 4.0.0
+    optional: true
 
-  mkdirp-classic@0.5.3: {}
+  mkdirp-classic@0.5.3:
+    optional: true
 
   mkdirp@0.5.6:
     dependencies:
       minimist: 1.2.8
 
-  mkdirp@1.0.4: {}
+  mkdirp@1.0.4:
+    optional: true
 
   ms@2.1.3: {}
 
@@ -6670,7 +6692,8 @@ snapshots:
 
   mute-stream@2.0.0: {}
 
-  napi-build-utils@2.0.0: {}
+  napi-build-utils@2.0.0:
+    optional: true
 
   napi-postinstall@0.3.3: {}
 
@@ -6686,10 +6709,12 @@ snapshots:
   node-abi@3.77.0:
     dependencies:
       semver: 7.7.2
+    optional: true
 
   node-abort-controller@3.1.1: {}
 
-  node-addon-api@7.1.1: {}
+  node-addon-api@7.1.1:
+    optional: true
 
   node-emoji@1.11.0:
     dependencies:
@@ -6884,6 +6909,7 @@ snapshots:
       simple-get: 4.0.1
       tar-fs: 2.1.4
       tunnel-agent: 0.6.0
+    optional: true
 
   prelude-ls@1.2.1: {}
 
@@ -6926,6 +6952,7 @@ snapshots:
     dependencies:
       end-of-stream: 1.4.5
       once: 1.4.0
+    optional: true
 
   punycode@2.3.1: {}
 
@@ -6963,6 +6990,7 @@ snapshots:
       ini: 1.3.8
       minimist: 1.2.8
       strip-json-comments: 2.0.1
+    optional: true
 
   react-is@18.3.1: {}
 
@@ -7135,13 +7163,15 @@ snapshots:
 
   signal-exit@4.1.0: {}
 
-  simple-concat@1.0.1: {}
+  simple-concat@1.0.1:
+    optional: true
 
   simple-get@4.0.1:
     dependencies:
       decompress-response: 6.0.0
       once: 1.4.0
       simple-concat: 1.0.1
+    optional: true
 
   slash@3.0.0: {}
 
@@ -7183,6 +7213,8 @@ snapshots:
 
   sql-highlight@6.1.0: {}
 
+  sql.js@1.13.0: {}
+
   sqlite3@5.1.7:
     dependencies:
       bindings: 1.5.0
@@ -7194,6 +7226,7 @@ snapshots:
     transitivePeerDependencies:
       - bluebird
       - supports-color
+    optional: true
 
   ssri@8.0.1:
     dependencies:
@@ -7245,7 +7278,8 @@ snapshots:
 
   strip-final-newline@2.0.0: {}
 
-  strip-json-comments@2.0.1: {}
+  strip-json-comments@2.0.1:
+    optional: true
 
   strip-json-comments@3.1.1: {}
 
@@ -7296,6 +7330,7 @@ snapshots:
       mkdirp-classic: 0.5.3
       pump: 3.0.3
       tar-stream: 2.2.0
+    optional: true
 
   tar-stream@2.2.0:
     dependencies:
@@ -7304,6 +7339,7 @@ snapshots:
       fs-constants: 1.0.0
       inherits: 2.0.4
       readable-stream: 3.6.2
+    optional: true
 
   tar@6.2.1:
     dependencies:
@@ -7313,6 +7349,7 @@ snapshots:
       minizlib: 2.1.2
       mkdirp: 1.0.4
       yallist: 4.0.0
+    optional: true
 
   terser-webpack-plugin@5.3.14(webpack@5.100.2):
     dependencies:
@@ -7430,6 +7467,7 @@ snapshots:
   tunnel-agent@0.6.0:
     dependencies:
       safe-buffer: 5.2.1
+    optional: true
 
   type-check@0.4.0:
     dependencies:
@@ -7460,7 +7498,7 @@ snapshots:
 
   typedarray@0.0.6: {}
 
-  typeorm@0.3.26(reflect-metadata@0.2.2)(sqlite3@5.1.7)(ts-node@10.9.2(@types/node@22.18.5)(typescript@5.9.2)):
+  typeorm@0.3.26(reflect-metadata@0.2.2)(sql.js@1.13.0)(sqlite3@5.1.7)(ts-node@10.9.2(@types/node@22.18.5)(typescript@5.9.2)):
     dependencies:
       '@sqltools/formatter': 1.2.5
       ansis: 3.17.0
@@ -7478,6 +7516,7 @@ snapshots:
       uuid: 11.1.0
       yargs: 17.7.2
     optionalDependencies:
+      sql.js: 1.13.0
       sqlite3: 5.1.7
       ts-node: 10.9.2(@types/node@22.18.5)(typescript@5.9.2)
     transitivePeerDependencies:
@@ -7677,7 +7716,8 @@ snapshots:
 
   yallist@3.1.1: {}
 
-  yallist@4.0.0: {}
+  yallist@4.0.0:
+    optional: true
 
   yargs-parser@21.1.1: {}
 

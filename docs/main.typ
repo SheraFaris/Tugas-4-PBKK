@@ -44,7 +44,22 @@ This document details the implementation of a Twitter-like social media applicat
 
 = Implementation Steps
 
-== Step 1: Schema Design
+== Step 1: Diagnose & Fix Test Failure
+
+Context: Running `pnpm test:e2e` failed with missing `jest` and later missing `@prisma/client` artifacts due to native build scripts being blocked and SQLite native builds on Windows/Node v24.
+
+Steps taken:
+1. Inspected `package.json` scripts and Jest configs to confirm setup.
+2. Identified broken PNPM shims caused by a failing native `sqlite3` install.
+3. Switched TypeORM to use `sqljs` (pure JS, no native build):
+  - Edited `src/typeorm/typeorm.module.ts`: `type: 'sqlite'` → `type: 'sqljs'` and set `autoSave: false` for in-memory tests.
+  - Updated `package.json` dependencies: removed `sqlite3`, added `sql.js`.
+4. Reinstalled dependencies: `pnpm install`.
+5. Approved necessary postinstall scripts: `pnpm approve-builds`.
+6. Generated Prisma client: `pnpm exec prisma generate`.
+7. Re-ran tests: `pnpm test:e2e` → all tests passed (31/31).
+
+== Step 2: Schema Design
 
 The first step was to design the database schema with three main entities:
 
@@ -99,7 +114,7 @@ Key features:
 - Cascade delete for maintaining referential integrity
 - Unique constraint on userId-postId combination to prevent duplicate likes
 
-== Step 2: TypeORM Entity Implementation
+== Step 3: TypeORM Entity Implementation
 
 TypeORM entities were implemented using decorators to define the database structure:
 
@@ -138,7 +153,7 @@ Similar implementations were done for Post and Like entities with appropriate de
 - `@CreateDateColumn()` and `@UpdateDateColumn()` for timestamps
 - `@Unique()` for unique constraints
 
-== Step 3: Data Transfer Objects (DTOs)
+== Step 4: Data Transfer Objects (DTOs)
 
 DTOs were implemented with validation decorators to ensure data integrity:
 
@@ -161,7 +176,7 @@ Similar DTOs were created for:
 - CreateLikeDto (userId, postId)
 - UpdateDtos extending PartialType for optional fields
 
-== Step 4: Service Layer Implementation
+== Step 5: Service Layer Implementation
 
 === TypeORM Services
 
@@ -239,7 +254,7 @@ export class UsersService {
 }
 ```
 
-== Step 5: Database Migration and Client Generation
+== Step 6: Database Migration and Client Generation
 
 === Prisma
 1. Generate Prisma Client: `prisma generate`
@@ -250,7 +265,7 @@ export class UsersService {
 - TypeORM synchronizes automatically in development mode using `synchronize: true` option
 - In production, migrations should be created manually using TypeORM CLI
 
-== Step 6: Testing
+== Step 7: Testing
 
 All 31 e2e tests passed successfully:
 - TypeORM CRUD operations: 16 tests (Users, Posts, Likes)
@@ -343,7 +358,10 @@ For a Twitter-like social media application with straightforward CRUD operations
 - Had better performance
 - Produced cleaner code
 
-The Prisma service implementations are noticeably more concise and readable compared to their TypeORM counterparts, without sacrificing functionality.
+Additional project-specific note:
+- For reliability in Windows CI/dev with Node v24, using `sqljs` for TypeORM avoids native build issues.
+- Prisma required `pnpm approve-builds` and a `prisma generate` step to ensure the client exists.
+- After these adjustments, both stacks passed all E2E tests; Prisma remains simpler day-to-day.
 
 = Conclusion
 
